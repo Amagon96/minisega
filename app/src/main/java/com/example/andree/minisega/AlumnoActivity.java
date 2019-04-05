@@ -66,7 +66,7 @@ public class AlumnoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = spinnerAdapter.getItem(position);
-                Intent alumnoMateriasActivity = new Intent(view.getContext(), AlumnoMaterias.class);
+                Intent alumnoMateriasActivity = new Intent(view.getContext(), MateriaAlumnos.class);
       //          alumnoMateriasActivity.putExtra("materiaId", getMateriaById(position).getId());
                 //alumnoMateriasActivity.putExtra("alumnoId", alumnId);
                 alumnoMateriasActivity.putExtra("alumnoNombre", alumnoNombre);

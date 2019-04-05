@@ -56,7 +56,7 @@ public class MateriaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new MyOpenHelper(this);
-        //materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
+        materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
         materiaNombre = intent.getStringExtra("nombreMateria");
         materiaClave = intent.getStringExtra("materiaClave");
         materiaCreditos = intent.getStringExtra("creditos");
@@ -67,8 +67,8 @@ public class MateriaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = spinnerAdapter.getItem(position);
-                Intent alumnoMateriasActivity = new Intent(view.getContext(), AlumnoMaterias.class);
-                //materiaActivity.putExtra("materiaId", materiaId);
+                Intent alumnoMateriasActivity = new Intent(view.getContext(), MateriaAlumnos.class);
+                alumnoMateriasActivity.putExtra("materiaId", Integer.toString(materiaId));
                 alumnoMateriasActivity.putExtra("nombreMateria", materiaNombre);
                 alumnoMateriasActivity.putExtra("materiaClave", materiaClave);
                 alumnoMateriasActivity.putExtra("creditos", materiaCreditos);
@@ -82,7 +82,7 @@ public class MateriaActivity extends AppCompatActivity {
 
     private void init() {
         materiaTitle = (TextView) findViewById(R.id.alumnoTitle);
-        materiaTitle.setText(String.format("%s - %s", materiaClave, materiaNombre));
+        materiaTitle.setText(String.format("%s - %s - %s", materiaId, materiaClave, materiaNombre));
         listaAlumnos = db.getAlumnos();
         spinnerAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,listaAlumnos.toArray());
         alumnosListView.setAdapter(spinnerAdapter);
