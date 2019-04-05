@@ -193,12 +193,4 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         }
         return listaAlumnos;
     }
-
-    public Materia getMateriaById(int idMateria) {
-        Cursor c = db.rawQuery(String.format("select * from materias WHERE _id = %s", idMateria), null);
-        int id = c.getInt(c.getColumnIndex("_id"));
-        Materia materia = new Materia(1,"draw", "Desarrollo Rapido",id);
-        c.close();
-        return materia;
-    }
 }

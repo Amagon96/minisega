@@ -19,7 +19,7 @@ public class MateriaActivity extends AppCompatActivity {
 
     private String materiaNombre;
     private int materiaId;
-    private int materiaCreditos;
+    private String materiaCreditos;
     private String materiaClave;
     private TextView materiaTitle;
 
@@ -56,10 +56,10 @@ public class MateriaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new MyOpenHelper(this);
-        materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
+        //materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
         materiaNombre = intent.getStringExtra("nombreMateria");
         materiaClave = intent.getStringExtra("materiaClave");
-        materiaCreditos = Integer.parseInt(intent.getStringExtra("creditos"));
+        materiaCreditos = intent.getStringExtra("creditos");
 
         alumnosListView = (ListView) findViewById(R.id.listAlumnos);
 
@@ -67,12 +67,12 @@ public class MateriaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = spinnerAdapter.getItem(position);
-                Intent materiaActivity = new Intent(view.getContext(), MateriaActivity.class);
-                materiaActivity.putExtra("materiaId", materiaId);
-                materiaActivity.putExtra("nombreMateria", materiaNombre);
-                materiaActivity.putExtra("materiaClave", materiaClave);
-                materiaActivity.putExtra("creditos", materiaCreditos);
-                startActivityForResult(materiaActivity, 0);
+                Intent alumnoMateriasActivity = new Intent(view.getContext(), AlumnoMaterias.class);
+                //materiaActivity.putExtra("materiaId", materiaId);
+                alumnoMateriasActivity.putExtra("nombreMateria", materiaNombre);
+                alumnoMateriasActivity.putExtra("materiaClave", materiaClave);
+                alumnoMateriasActivity.putExtra("creditos", materiaCreditos);
+                startActivityForResult(alumnoMateriasActivity, 0);
             }
         });
 

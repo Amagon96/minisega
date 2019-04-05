@@ -60,26 +60,23 @@ public class AlumnoActivity extends AppCompatActivity {
         alumnoAPaterno = intent.getStringExtra("alumnoAPaterno");
         alumnId = Integer.parseInt(intent.getStringExtra("alumnoId"));
 
-        materiassListView = (ListView) findViewById(R.id.listAlumnos);
+        materiassListView = (ListView) findViewById(R.id.listMaterias);
 
         materiassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = spinnerAdapter.getItem(position);
                 Intent alumnoMateriasActivity = new Intent(view.getContext(), AlumnoMaterias.class);
-                alumnoMateriasActivity.putExtra("alumnoId", alumnId);
+      //          alumnoMateriasActivity.putExtra("materiaId", getMateriaById(position).getId());
+                //alumnoMateriasActivity.putExtra("alumnoId", alumnId);
                 alumnoMateriasActivity.putExtra("alumnoNombre", alumnoNombre);
                 alumnoMateriasActivity.putExtra("alumnoAPaterno", alumnoAPaterno);
-                alumnoMateriasActivity.putExtra("materiaId", getMateriaById(position).getId());
+                System.out.println("position = " + position);
                 startActivityForResult(alumnoMateriasActivity, 0);
             }
         });
 
         init();
-    }
-
-    private Materia getMateriaById(int idMateria) {
-        return db.getMateriaById(idMateria);
     }
 
     private void init() {

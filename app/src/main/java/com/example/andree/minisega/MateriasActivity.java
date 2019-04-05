@@ -51,6 +51,7 @@ public class MateriasActivity extends AppCompatActivity {
                 Object item = spinnerAdapter.getItem(position);
                 Intent materiaActivity = new Intent(view.getContext(), MateriaActivity.class);
                 materiaActivity.putExtra("materiaId", Integer.toString(((Materia) item ).getId()));
+                System.out.println("->" + Integer.toString(((Materia) item).getId()));
                 materiaActivity.putExtra("nombreMateria", ((Materia) item).getNombre());
                 materiaActivity.putExtra("materiaClave", ((Materia)item).getClave());
                 materiaActivity.putExtra("creditos", Integer.toString(((Materia)item).getCreditos()));

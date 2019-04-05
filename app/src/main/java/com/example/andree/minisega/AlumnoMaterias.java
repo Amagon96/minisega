@@ -17,11 +17,11 @@ public class AlumnoMaterias extends AppCompatActivity {
         Intent intent = getIntent();
 
         text = (TextView) findViewById(R.id.textView);
-        materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
+        //materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
         init();
     }
 
     private void init() {
-        text.setText(String.format("-%s-", materiaId));
+        text.setText("Hola");
     }
 }
