@@ -67,7 +67,7 @@ public class AlumnoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = spinnerAdapter.getItem(position);
                 Intent faltasActivity = new Intent(view.getContext(), FaltasActivity.class);
-                faltasActivity.putExtra("materiaId", getMateriaById(position).getId());
+                faltasActivity.putExtra("materiaId", getMateriaById(Integer.toString(position)).toString());
                 faltasActivity.putExtra("alumnoId", Integer.toString(alumnId));
                 faltasActivity.putExtra("alumnoNombre", alumnoNombre);
                 faltasActivity.putExtra("alumnoAPaterno", alumnoAPaterno);
@@ -79,8 +79,8 @@ public class AlumnoActivity extends AppCompatActivity {
         init();
     }
 
-    private void getMateriaById(int position) {
-        materia = db.getMateriaById(position);
+    private Materia getMateriaById(String position) {
+        return materia = db.getMateriaById(position);
     }
 
     private void init() {
