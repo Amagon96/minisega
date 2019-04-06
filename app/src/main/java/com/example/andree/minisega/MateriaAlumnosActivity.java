@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class MateriaAlumnos extends AppCompatActivity {
+public class MateriaAlumnosActivity extends AppCompatActivity {
 
-    private TextView text;
+    private TextView header;
     private int materiaId;
 
     @Override
@@ -18,12 +18,11 @@ public class MateriaAlumnos extends AppCompatActivity {
 
         materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
 
-        text = (TextView) findViewById(R.id.textView3);
-        //materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));
+        header = (TextView) findViewById(R.id.alumnoTitle);
         init();
     }
 
     private void init() {
-        text.setText(Integer.toString(materiaId));
+        header.setText(Integer.toString(materiaId));
     }
 }

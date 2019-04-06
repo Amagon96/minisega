@@ -37,7 +37,7 @@ public class AlumnoActivity extends AppCompatActivity {
      * Declaración de lista y elemento actual
      */
     private ArrayList<Materia> listaMaterias;
-    private Materia Materia;
+    private Materia materia;
 
     /**
      * Controlador de bases de datos
@@ -66,17 +66,21 @@ public class AlumnoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = spinnerAdapter.getItem(position);
-                Intent alumnoMateriasActivity = new Intent(view.getContext(), MateriaAlumnos.class);
-      //          alumnoMateriasActivity.putExtra("materiaId", getMateriaById(position).getId());
-                //alumnoMateriasActivity.putExtra("alumnoId", alumnId);
-                alumnoMateriasActivity.putExtra("alumnoNombre", alumnoNombre);
-                alumnoMateriasActivity.putExtra("alumnoAPaterno", alumnoAPaterno);
+                Intent faltasActivity = new Intent(view.getContext(), FaltasActivity.class);
+                faltasActivity.putExtra("materiaId", getMateriaById(position).getId());
+                faltasActivity.putExtra("alumnoId", Integer.toString(alumnId));
+                faltasActivity.putExtra("alumnoNombre", alumnoNombre);
+                faltasActivity.putExtra("alumnoAPaterno", alumnoAPaterno);
                 System.out.println("position = " + position);
-                startActivityForResult(alumnoMateriasActivity, 0);
+                startActivityForResult(faltasActivity, 0);
             }
         });
 
         init();
+    }
+
+    private void getMateriaById(int position) {
+        materia = db.getMateriaById(position);
     }
 
     private void init() {

@@ -67,7 +67,7 @@ public class MateriaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = spinnerAdapter.getItem(position);
-                Intent alumnoMateriasActivity = new Intent(view.getContext(), MateriaAlumnos.class);
+                Intent alumnoMateriasActivity = new Intent(view.getContext(), MateriaAlumnosActivity.class);
                 alumnoMateriasActivity.putExtra("materiaId", Integer.toString(materiaId));
                 alumnoMateriasActivity.putExtra("nombreMateria", materiaNombre);
                 alumnoMateriasActivity.putExtra("materiaClave", materiaClave);
@@ -83,7 +83,7 @@ public class MateriaActivity extends AppCompatActivity {
     private void init() {
         materiaTitle = (TextView) findViewById(R.id.alumnoTitle);
         materiaTitle.setText(String.format("%s - %s - %s", materiaId, materiaClave, materiaNombre));
-        listaAlumnos = db.getAlumnos();
+        listaAlumnos = db.getAlumnosOfMateria(Integer.toString(materiaId));
         spinnerAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,listaAlumnos.toArray());
         alumnosListView.setAdapter(spinnerAdapter);
     }

@@ -160,7 +160,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
 
     public ArrayList<Alumno> getAlumnosOfMateria(String idSelectedMateria){
         ArrayList<MateriasAlumnos> lista = new ArrayList<>();
-        Cursor c = db.rawQuery("select * from materias_alumno WHERE idMateria = ?", new String[]{idSelectedMateria});
+        Cursor c = db.rawQuery("select * from materias_alumnos WHERE idMateria = ?", new String[]{idSelectedMateria});
         if(c != null && c.getCount()>0){
             c.moveToFirst();
             do {
@@ -192,5 +192,15 @@ public class MyOpenHelper extends SQLiteOpenHelper {
             d.close();
         }
         return listaAlumnos;
+    }
+
+    public Materia getMateriaById(String idSelectedMateria) {
+        Cursor c = db.rawQuery("select * from materias WHERE _id = ?", new String[]{idSelectedMateria});
+        int materiaId = c.getInt(c.getColumnIndex("_id"));
+        String claveMateria = c.getString(c.getColumnIndex("clave"));
+        String nombreMateria = c.getString(c.getColumnIndex("nombre"));
+        int materiaCreditos = c.getInt(c.getColumnIndex("creditos"));
+        Materia materia = new Materia(materiaId, claveMateria, nombreMateria, materiaCreditos);
+        return materia;
     }
 }

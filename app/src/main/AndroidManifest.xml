@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MateriaAlumnos"></activity>
+        <activity android:name=".FaltasActivity"></activity>
+        <activity android:name=".MateriaAlumnosActivity" />
         <activity android:name=".MateriaActivity" />
         <activity android:name=".NewMateriaActivity" />
         <activity android:name=".MateriasActivity" />
