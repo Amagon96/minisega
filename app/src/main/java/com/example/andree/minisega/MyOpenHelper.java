@@ -196,6 +196,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
 
     public Materia getMateriaById(String idSelectedMateria) {
         Cursor c = db.rawQuery("select * from materias WHERE _id = ?", new String[]{idSelectedMateria});
+        c.moveToFirst();
         int materiaId = c.getInt(c.getColumnIndex("_id"));
         String claveMateria = c.getString(c.getColumnIndex("clave"));
         String nombreMateria = c.getString(c.getColumnIndex("nombre"));
