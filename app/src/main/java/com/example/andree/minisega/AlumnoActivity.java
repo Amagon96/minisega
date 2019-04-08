@@ -65,7 +65,6 @@ public class AlumnoActivity extends AppCompatActivity {
         materiassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object item = spinnerAdapter.getItem(position);
                 Intent faltasActivity = new Intent(view.getContext(), FaltasActivity.class);
                 faltasActivity.putExtra("materiaId", Integer.toString(position+1)).toString();
                 faltasActivity.putExtra("alumnoId", Integer.toString(alumnId));

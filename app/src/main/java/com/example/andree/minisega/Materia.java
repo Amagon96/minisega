@@ -15,8 +15,7 @@ public class Materia {
 
     @Override
     public String toString() {
-        return "Materia:" + " " + nombre + " " +
-                "Clave:" + " " + clave;
+        return clave.toUpperCase() + ' ' + nombre.substring(0,1).toUpperCase() + nombre.substring(1);
     }
 
     public Integer getCreditos() {

@@ -16,7 +16,8 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return "Alumno:" + nombre.toUpperCase() + ' ' + aPaterno.toUpperCase();
+        return nombre.substring(0,1).toUpperCase() + nombre.substring(1) + ' ' +
+                aPaterno.substring(0,1).toUpperCase() + aPaterno.substring(1);
     }
 
     public String getNombre() {
@@ -49,5 +50,9 @@ public class Alumno {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNombreCompleto() {
+        return String.format(nombre + ' ' + aPaterno);
     }
 }

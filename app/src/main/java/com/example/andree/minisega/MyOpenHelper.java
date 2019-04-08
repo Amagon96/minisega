@@ -104,7 +104,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.insert("materias_alumnos", null, cv);
     }
 
-    public void getAlgo(Integer idSelectedMateria, Integer idSelectedAlumno){
+    public void getFaltas(Integer idSelectedMateria, Integer idSelectedAlumno){
         ArrayList<MateriasAlumnos> lista=new ArrayList<>();
         Cursor c = db.rawQuery("select * from materias_alumno WHERE idAlumno = ? AND idMateria = ?", new String[]{Integer.toString(idSelectedAlumno), Integer.toString(idSelectedMateria)});
         int idRegister=0;
@@ -203,5 +203,17 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         int materiaCreditos = c.getInt(c.getColumnIndex("creditos"));
         Materia materia = new Materia(materiaId, claveMateria, nombreMateria, materiaCreditos);
         return materia;
+    }
+
+    public Alumno getAlumnoById(String idSelectedAlumno) {
+        System.out.println("idSelectedAlumno = " + idSelectedAlumno);
+        Cursor c = db.rawQuery("select * from alumnos WHERE _id = ?", new String[]{idSelectedAlumno});
+        c.moveToFirst();
+        int alumnoId = c.getInt(c.getColumnIndex("_id"));
+        String aPaternoAlumno = c.getString(c.getColumnIndex("aPaterno"));
+        String nombreAlumno = c.getString(c.getColumnIndex("nombre"));
+        String carreraAlumno = c.getString(c.getColumnIndex("carrera"));
+        Alumno alumno = new Alumno(nombreAlumno, aPaternoAlumno, carreraAlumno, alumnoId);
+        return alumno;
     }
 }
