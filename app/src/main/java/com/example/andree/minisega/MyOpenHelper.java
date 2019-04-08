@@ -20,7 +20,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
             "KEY AUTOINCREMENT, creditos INTEGER, clave TEXT, nombre TEXT)";
 
     public static final String ALUMNO_Y_MATERIA = "CREATE TABLE materias_alumnos(_id INTEGER PRIMARY " +
-            "KEY AUTOINCREMENT, idAlumn INTEGER, idMateria INTEGER, creditos INTEGER, faltas INTEGER)";
+            "KEY AUTOINCREMENT, idAlumno INTEGER, idMateria INTEGER, faltas INTEGER)";
 
     private static final String DB_NAME = "minisega.sqlite";
     private static final int DB_VERSION = 1;
@@ -96,35 +96,18 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    public void insertMateriaIntoAlumno(Integer idAlumno, Integer idMateria, Integer faltas){
+    public void registrarAlumnoMateria(Integer idAlumno, Integer idMateria){
         ContentValues cv = new ContentValues();
         cv.put("idAlumno", idAlumno);
         cv.put("idMateria", idMateria);
-        cv.put("faltas", faltas);
+        cv.put("faltas", 0);
         db.insert("materias_alumnos", null, cv);
     }
 
-    public void getFaltas(Integer idSelectedMateria, Integer idSelectedAlumno){
-        ArrayList<MateriasAlumnos> lista=new ArrayList<>();
-        Cursor c = db.rawQuery("select * from materias_alumno WHERE idAlumno = ? AND idMateria = ?", new String[]{Integer.toString(idSelectedAlumno), Integer.toString(idSelectedMateria)});
-        int idRegister=0;
-        int faltas = 0;
-        if (c != null && c.getCount()>0) {
-            c.moveToFirst();
-            do {
-                int id = c.getInt(c.getColumnIndex("_id"));
-                faltas = c.getInt(c.getColumnIndex("faltas"));
-            } while (c.moveToNext());
-        }
-        c.close();
-        ContentValues cv = new ContentValues();
-        cv.put("faltas", Integer.toString(faltas+1));
-        db.update("materias_alumno", cv, "_id=?", new String[] { Integer.toString(idRegister) });
-    }
 
     public ArrayList<Materia> getMateriasOfAlumno(String idSelectedAlumno){
         ArrayList<MateriasAlumnos> lista = new ArrayList<>();
-        Cursor c = db.rawQuery("select * from materias_alumno WHERE idAlumno = ?", new String[]{idSelectedAlumno});
+        Cursor c = db.rawQuery("select * from materias_alumnos WHERE idAlumno = ?", new String[]{idSelectedAlumno});
         if(c != null && c.getCount()>0){
             c.moveToFirst();
             do{
@@ -202,11 +185,11 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         String nombreMateria = c.getString(c.getColumnIndex("nombre"));
         int materiaCreditos = c.getInt(c.getColumnIndex("creditos"));
         Materia materia = new Materia(materiaId, claveMateria, nombreMateria, materiaCreditos);
+        c.close();
         return materia;
     }
 
     public Alumno getAlumnoById(String idSelectedAlumno) {
-        System.out.println("idSelectedAlumno = " + idSelectedAlumno);
         Cursor c = db.rawQuery("select * from alumnos WHERE _id = ?", new String[]{idSelectedAlumno});
         c.moveToFirst();
         int alumnoId = c.getInt(c.getColumnIndex("_id"));
@@ -214,6 +197,31 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         String nombreAlumno = c.getString(c.getColumnIndex("nombre"));
         String carreraAlumno = c.getString(c.getColumnIndex("carrera"));
         Alumno alumno = new Alumno(nombreAlumno, aPaternoAlumno, carreraAlumno, alumnoId);
+        c.close();
         return alumno;
+    }
+
+    public Integer getFaltas(String idSelectedMateria, String idSelectedAlumno){
+        Cursor c = db.rawQuery("select * from materias_alumnos WHERE idAlumno = ? AND idMateria = ?", new String[]{idSelectedAlumno, idSelectedMateria});
+        c.moveToFirst();
+        int faltas = 0;
+        if(c.getCount()>0){
+            faltas = c.getInt(c.getColumnIndex("faltas"));
+        }
+        c.close();
+        return faltas;
+    }
+
+    public boolean isAlumnoOfMateria(String materiaId, String alumnoId) {
+        Cursor c = db.rawQuery("select * from materias_alumnos WHERE idAlumno = ? AND idMateria = ?", new String[]{alumnoId, materiaId});
+        c.moveToFirst();
+        if(c.getCount()>0){
+            c.close();
+            return true;
+        }
+        else {
+            c.close();
+            return false;
+        }
     }
 }

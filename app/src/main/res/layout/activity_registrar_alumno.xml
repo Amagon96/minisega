@@ -38,4 +38,140 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
+    <Button
+        android:id="@+id/inscribirAlumno"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorGrayText"
+        android:text="@string/registrar"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhiteText"
+        app:layout_constraintBottom_toTopOf="@+id/containerFaltas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alumnoNombre" />
+
+    <RelativeLayout
+        android:id="@+id/containerFaltas"
+        android:layout_width="362dp"
+        android:layout_height="419dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscribirAlumno">
+
+        <EditText
+            android:id="@+id/fechaFalta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="74dp"
+            android:layout_marginLeft="74dp"
+            android:layout_marginTop="81dp"
+            android:layout_marginEnd="74dp"
+            android:layout_marginRight="74dp"
+            android:layout_marginBottom="293dp"
+            android:ems="10"
+            android:hint="@string/fechaFalta"
+            android:inputType="date" />
+
+        <TextView
+            android:id="@+id/headerFaltas"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="143dp"
+            android:layout_marginLeft="143dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="142dp"
+            android:layout_marginRight="142dp"
+            android:text="@string/faltas"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/numeroFaltas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="120dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginBottom="124dp"
+            android:background="@drawable/box"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/colorWhiteText"
+            android:textSize="52sp"
+            android:textStyle="bold" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/agregarFalta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="92dp"
+            android:layout_marginRight="92dp"
+            android:layout_marginBottom="105dp"
+            app:backgroundTint="@color/colorGrayText"
+            app:rippleColor="@android:color/transparent"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/quitarFalta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="93dp"
+            android:layout_marginLeft="93dp"
+            android:layout_marginBottom="105dp"
+            android:clickable="true"
+            app:backgroundTint="@color/colorGrayText"
+            app:srcCompat="@drawable/arrow_left" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/guardar"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/colorGrayText"
+        android:text="@string/guardar"
+        android:textColor="@color/colorWhiteText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerFaltas" />
+
 </android.support.constraint.ConstraintLayout>
