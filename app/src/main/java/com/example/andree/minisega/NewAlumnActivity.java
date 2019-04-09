@@ -1,6 +1,7 @@
 package com.example.andree.minisega;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,8 @@ public class NewAlumnActivity extends AppCompatActivity {
     private EditText editAPaterno;
     private EditText editCarrera;
 
+    private Button goBackButton;
+
     private MyOpenHelper db;
 
     @Override
@@ -39,6 +42,10 @@ public class NewAlumnActivity extends AppCompatActivity {
 
         btnAdd = (Button) findViewById(R.id.addButton);
 
+        goBackButton = (Button) findViewById(R.id.saveButton);
+        goBackButton.setOnClickListener(v -> {
+            goBack(v);});
+
         db = new MyOpenHelper(this);
 
         btnAdd.setOnClickListener(v -> {
@@ -48,11 +55,16 @@ public class NewAlumnActivity extends AppCompatActivity {
 
     private void addAlumno(String nombre, String aPaterno, String carrera) {
         if(nombre.isEmpty() || aPaterno.isEmpty() || carrera.isEmpty()){
-            Toast.makeText(this, "Por favor llene todos los campos.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Por favor llene todos los campos.", Toast.LENGTH_LONG).show();
         }else {
             db.insertAlumno(nombre, aPaterno, carrera);
             finish();
             startActivity(getIntent());
         }
+    }
+
+    private void goBack(View view) {
+        Intent alumnosActivity = new Intent(view.getContext(), AlumnosActivity.class);
+        startActivityForResult(alumnosActivity, 0);
     }
 }

@@ -1,7 +1,9 @@
 package com.example.andree.minisega;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,6 +12,8 @@ public class NewMateriaActivity extends AppCompatActivity {
     private EditText nombre;
     private EditText clave;
     private EditText creditos;
+
+    private Button goBackButton;
 
     private Button addButton;
     private MyOpenHelper db;
@@ -30,6 +34,10 @@ public class NewMateriaActivity extends AppCompatActivity {
 
         addButton = (Button) findViewById(R.id.addButton);
 
+        goBackButton = (Button) findViewById(R.id.saveButton);
+        goBackButton.setOnClickListener(v -> {
+            goBack(v);});
+
         db = new MyOpenHelper(this);
 
         addButton.setOnClickListener(v -> {addMateria(nombre.getText().toString(), clave.getText().toString(), Integer.valueOf(creditos.getText().toString()));});
@@ -43,5 +51,10 @@ public class NewMateriaActivity extends AppCompatActivity {
             finish();
             startActivity(getIntent());
         }
+    }
+
+    private void goBack(View view) {
+        Intent materiasActivity = new Intent(view.getContext(), MateriasActivity.class);
+        startActivityForResult(materiasActivity, 0);
     }
 }

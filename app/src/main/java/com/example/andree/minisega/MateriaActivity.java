@@ -84,7 +84,7 @@ public class MateriaActivity extends AppCompatActivity {
 
     private void init() {
         materiaTitle = (TextView) findViewById(R.id.alumnoTitle);
-        materiaTitle.setText(String.format("%s - %s - %s", materiaId, materiaClave, materiaNombre));
+        materiaTitle.setText(String.format("%s - %s", materiaClave, materiaNombre));
         listaAlumnos = db.getAlumnos();
         spinnerAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,listaAlumnos.toArray());
         alumnosListView.setAdapter(spinnerAdapter);
@@ -98,11 +98,13 @@ public class MateriaActivity extends AppCompatActivity {
 
     private void borrarMateria(View view, String idMateria) {
         db.deleteMateria(idMateria);
-        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
         Toast.makeText(this, "Materia eliminada con extito",Toast.LENGTH_LONG).show();
+        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
+        startActivityForResult(faltasActivity, 0);
     }
 
     private void goBack(View view) {
         Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
+        startActivityForResult(faltasActivity, 0);
     }
 }

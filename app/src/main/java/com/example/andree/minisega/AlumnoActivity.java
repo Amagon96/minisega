@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -18,7 +19,7 @@ public class AlumnoActivity extends AppCompatActivity {
 
     private String alumnoNombre;
     private String alumnoAPaterno;
-    private int alumnId;
+    private String alumnoId;
     private TextView alumnoTitle;
 
     private ListView materiassListView;
@@ -57,23 +58,23 @@ public class AlumnoActivity extends AppCompatActivity {
 
         alumnoNombre = intent.getStringExtra("alumnoNombre");
         alumnoAPaterno = intent.getStringExtra("alumnoAPaterno");
-        alumnId = Integer.parseInt(intent.getStringExtra("alumnoId"));
+        alumnoId = intent.getStringExtra("alumnoId");
 
         materiassListView = (ListView) findViewById(R.id.listMaterias);
 
-        /*
+
         materiassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent faltasActivity = new Intent(view.getContext(), FaltasActivity.class);
-                faltasActivity.putExtra("materiaId", Integer.toString(position+1)).toString();
-                faltasActivity.putExtra("alumnoId", Integer.toString(alumnId));
+                faltasActivity.putExtra("materiaId", Integer.toString(position+1));
+                faltasActivity.putExtra("alumnoId", alumnoId);
                 faltasActivity.putExtra("alumnoNombre", alumnoNombre);
                 faltasActivity.putExtra("alumnoAPaterno", alumnoAPaterno);
                 startActivityForResult(faltasActivity, 0);
             }
         });
-        */
+
 
         init();
     }
@@ -81,25 +82,27 @@ public class AlumnoActivity extends AppCompatActivity {
 
     private void init() {
         alumnoTitle = (TextView) findViewById(R.id.alumnoTitle);
-        alumnoTitle.setText(String.format("%s - %s %s", alumnId, alumnoAPaterno,alumnoNombre));
+        alumnoTitle.setText(String.format("%s %s", alumnoAPaterno,alumnoNombre));
         goBackButton = (Button) findViewById(R.id.saveButton);
         goBackButton.setOnClickListener(v -> {
             goBack(v);});
         delete = (Button) findViewById(R.id.cancelar);
-        delete.setOnClickListener(v -> {borrarAlumno(v, Integer.toString(alumnId));});
+        delete.setOnClickListener(v -> {borrarAlumno(v, alumnoId);});
 
-        listaMaterias = db.getMateriasOfAlumno(Integer.toString(alumnId));
+        listaMaterias = db.getMateriasOfAlumno(alumnoId);
         spinnerAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, listaMaterias.toArray());
         materiassListView.setAdapter(spinnerAdapter);
     }
 
     private void borrarAlumno(View view, String idAlumno) {
         db.deleteAlumno(idAlumno);
-        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
         Toast.makeText(this, "Alumno eliminado con extito",Toast.LENGTH_LONG).show();
+        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
+        startActivityForResult(faltasActivity, 0);
     }
 
     private void goBack(View view) {
         Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
+        startActivityForResult(faltasActivity, 0);
     }
 }

@@ -250,4 +250,14 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.delete("materias_alumnos", "idMateria=?", new String[]{idMateria});
         db.delete("materias","_id=?", new String[]{idMateria});
     }
+
+    public int getMateriaCreditosById(String materiaId) {
+        Cursor c = db.rawQuery("select creditos from materias where _id=?", new String[]{materiaId});
+        c.moveToFirst();
+        int creditos = 0;
+        if(c.getCount()>0){
+            creditos = c.getInt(c.getColumnIndex("creditos"));
+        }
+        return creditos;
+    }
 }
