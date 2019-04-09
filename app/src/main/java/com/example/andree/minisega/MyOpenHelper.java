@@ -237,4 +237,14 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         cv.put("faltas", faltas);
         db.update("materias_alumnos", cv,"_id=?", new String[]{Integer.toString(idRegistro)});
     }
+
+    public void deleteAlumno(String idAlumno) {
+        db.delete("materias_alumnos", "idAlumno=?", new String[]{idAlumno});
+        db.delete("alumnos","_id=?", new String[]{idAlumno});
+    }
+
+    public void deleteMateria(String idMateria){
+        db.delete("materias_alumnos", "idMateria=?", new String[]{idMateria});
+        db.delete("materias","_id=?", new String[]{idMateria});
+    }
 }

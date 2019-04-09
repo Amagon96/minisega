@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,8 +25,8 @@ public class MateriaActivity extends AppCompatActivity {
 
     private ListView alumnosListView;
 
-    private Button save;
-    private ImageButton delete;
+    private Button goBackButton;
+    private Button delete;
 
     /**
      * Declaración spinner y adapter
@@ -88,5 +88,21 @@ public class MateriaActivity extends AppCompatActivity {
         listaAlumnos = db.getAlumnos();
         spinnerAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,listaAlumnos.toArray());
         alumnosListView.setAdapter(spinnerAdapter);
+        goBackButton = (Button) findViewById(R.id.saveButton);
+        goBackButton.setOnClickListener(v -> {
+            goBack(v);});
+        delete = (Button) findViewById(R.id.cancelar);
+        delete.setOnClickListener(v -> {
+            borrarMateria(v, Integer.toString(materiaId));});
+    }
+
+    private void borrarMateria(View view, String idMateria) {
+        db.deleteMateria(idMateria);
+        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
+        Toast.makeText(this, "Materia eliminada con extito",Toast.LENGTH_LONG).show();
+    }
+
+    private void goBack(View view) {
+        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
     }
 }

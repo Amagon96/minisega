@@ -17,4 +17,6 @@
     <string name="creditos">Creditos</string>
     <string name="registrar">Inscribir Alumno</string>
     <string name="fechaFalta">Fecha de Falta</string>
+    <string name="borrar">Borrar</string>
+    <string name="regresar">Regresar</string>
 </resources>

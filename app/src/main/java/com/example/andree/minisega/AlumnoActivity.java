@@ -5,13 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,8 +23,8 @@ public class AlumnoActivity extends AppCompatActivity {
 
     private ListView materiassListView;
 
-    private Button save;
-    private ImageButton delete;
+    private Button goBackButton;
+    private Button delete;
 
     /**
      * Declaración spinner y adapter
@@ -83,21 +82,24 @@ public class AlumnoActivity extends AppCompatActivity {
     private void init() {
         alumnoTitle = (TextView) findViewById(R.id.alumnoTitle);
         alumnoTitle.setText(String.format("%s - %s %s", alumnId, alumnoAPaterno,alumnoNombre));
-        save = (Button) findViewById(R.id.saveButton);
-        save.setOnClickListener(v -> {guardarMaterias();});
-        delete = (ImageButton) findViewById(R.id.deleteButton);
-        delete.setOnClickListener(v -> {borrarAlumno();});
+        goBackButton = (Button) findViewById(R.id.saveButton);
+        goBackButton.setOnClickListener(v -> {
+            goBack(v);});
+        delete = (Button) findViewById(R.id.cancelar);
+        delete.setOnClickListener(v -> {borrarAlumno(v, Integer.toString(alumnId));});
 
         listaMaterias = db.getMateriasOfAlumno(Integer.toString(alumnId));
         spinnerAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, listaMaterias.toArray());
         materiassListView.setAdapter(spinnerAdapter);
     }
 
-    private void borrarAlumno() {
-
+    private void borrarAlumno(View view, String idAlumno) {
+        db.deleteAlumno(idAlumno);
+        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
+        Toast.makeText(this, "Alumno eliminado con extito",Toast.LENGTH_LONG).show();
     }
 
-    private void guardarMaterias() {
-
+    private void goBack(View view) {
+        Intent faltasActivity = new Intent(view.getContext(), AlumnosActivity.class);
     }
 }

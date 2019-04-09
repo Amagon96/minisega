@@ -10,8 +10,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button opcionAlumnos;
     private Button opcionMaterias;
-    private Button thirdCard;
-    private Button forthCard;
+    private Button opcionGrupos;
+    private Button opcionFaltas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         opcionAlumnos.setOnClickListener(v -> {showAlumnosActivity(v);});
         opcionMaterias = (Button) findViewById(R.id.materias);
         opcionMaterias.setOnClickListener(v ->{showMateriasActivity(v);});
+        opcionFaltas = (Button) findViewById(R.id.faltas);
+        opcionFaltas.setVisibility(View.GONE);
+        opcionGrupos = (Button) findViewById(R.id.grupos);
+        opcionGrupos.setVisibility(View.GONE);
     }
 
     private void showMateriasActivity(View v) {
