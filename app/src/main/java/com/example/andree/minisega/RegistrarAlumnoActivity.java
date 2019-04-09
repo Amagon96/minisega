@@ -105,12 +105,12 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void registrarAlumnoAMateria(String materiaId, String alumnoId, Alumno alumnoRegistro) {
-        if(isAlumnoInscribed()) {
+        if(!isAlumnoInscribed()) {
             db.registrarAlumnoMateria(Integer.valueOf(materiaId), Integer.valueOf(alumnoId));
             layoutFaltas.setVisibility(View.VISIBLE);
             Toast.makeText(this, String.format("%s ha sido registrado con exito", alumnoRegistro.getNombre(), faltasToInsert),
                     Toast.LENGTH_LONG).show();
-            inscribirAlumno.setText("Sacar Alumno");
+            inscribirAlumno.setText("Correr Alumno");
         }else{
             db.eliminarAlumnoMateria(Integer.valueOf(materiaId), Integer.valueOf(alumnoId));
             layoutFaltas.setVisibility(View.GONE);
