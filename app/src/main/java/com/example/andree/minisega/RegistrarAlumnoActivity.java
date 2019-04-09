@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegistrarAlumnoActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
     private TextView numeroFaltas;
     private RelativeLayout layoutFaltas;
     private Button inscribirAlumno;
+    private Button guardarFaltas;
     private String materiaId;
     private String alumnoId;
 
@@ -36,6 +38,10 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         db = new MyOpenHelper(this);
 
+        idAlumno = intent.getStringExtra("alumnoPosition");
+
+        alumno = db.getAlumnoById(idAlumno);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -47,16 +53,11 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
         layoutFaltas.setVisibility(View.GONE);
 
         inscribirAlumno = (Button) findViewById(R.id.inscribirAlumno);
-        inscribirAlumno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.registrarAlumnoMateria(Integer.valueOf(materiaId), Integer.valueOf(alumnoId));
-                layoutFaltas.setVisibility(View.VISIBLE);
-            }
+        inscribirAlumno.setOnClickListener((v)-> {
+            registrarAlumnoAMateria(materiaId, alumnoId, alumno);
         });
 
         header = (TextView) findViewById(R.id.alumnoNombre);
-        idAlumno = intent.getStringExtra("alumnoPosition");
         agregarFalta = (FloatingActionButton) findViewById(R.id.agregarFalta);
 
         isAlumnoInscribed();
@@ -78,26 +79,46 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 faltasToInsert = Integer.parseInt(numeroFaltas.getText().toString());
-                faltasToInsert+=-1;
+                if (faltasToInsert != 0){
+                    faltasToInsert+=-1;
+                }
                 numeroFaltas.setText(String.format("%s",faltasToInsert));
             }
         });
+
+        guardarFaltas = (Button) findViewById(R.id.guardar);
+
+        guardarFaltas.setOnClickListener((v)->{
+            insertarFaltasAAlumno(materiaId, alumnoId, faltasToInsert, alumno);
+        });
+
         editFechaFalta =(EditText) findViewById(R.id.fechaFalta);
         editFechaFalta.setVisibility(View.GONE);
         numeroFaltas = (TextView) findViewById(R.id.numeroFaltas);
-        System.out.println("alumnoId = " + alumnoId);
-        System.out.println("materiaId = " + materiaId);
+
         numeroFaltas.setText(String.format("%s",db.getFaltas(materiaId, alumnoId)));
 
-        init();
+        getHeader(alumno);
+    }
+
+    private void registrarAlumnoAMateria(String materiaId, String alumnoId, Alumno alumnoRegistro) {
+        db.registrarAlumnoMateria(Integer.valueOf(materiaId), Integer.valueOf(alumnoId));
+        layoutFaltas.setVisibility(View.VISIBLE);
+        Toast.makeText(this, String.format("%s ha sido registrado con exito", alumnoRegistro.getNombre(), faltasToInsert),
+                Toast.LENGTH_LONG).show();
+    }
+
+    private void insertarFaltasAAlumno(String materiaId, String alumnoId, int faltasToInsert, Alumno alumnoFaltas) {
+        db.insertFaltas(materiaId, alumnoId, faltasToInsert);
+        Toast.makeText(this, String.format("%s tiene %s faltas.", alumnoFaltas.getNombre(), faltasToInsert),
+                Toast.LENGTH_LONG).show();
     }
 
     private boolean isAlumnoInscribed() {
         return db.isAlumnoOfMateria(materiaId, alumnoId);
     }
 
-    private void init() {
-        alumno = db.getAlumnoById(idAlumno);
-        header.setText(alumno.getNombreCompleto());
+    private void getHeader(Alumno alumnoHeader) {
+        header.setText(alumnoHeader.getNombreCompleto());
     }
 }

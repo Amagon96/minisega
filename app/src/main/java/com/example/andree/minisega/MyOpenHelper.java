@@ -105,16 +105,16 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<Materia> getMateriasOfAlumno(String idSelectedAlumno){
+    public ArrayList<Materia> getAlumnoOfMateria(String idSelectedAlumno){
         ArrayList<MateriasAlumnos> lista = new ArrayList<>();
         Cursor c = db.rawQuery("select * from materias_alumnos WHERE idAlumno = ?", new String[]{idSelectedAlumno});
         if(c != null && c.getCount()>0){
             c.moveToFirst();
             do{
-                int id = c.getInt(c.getColumnIndex("id"));
+                int id = c.getInt(c.getColumnIndex("_id"));
                 int idAlumno = c.getInt(c.getColumnIndex("idAlumno"));
                 int idMateria = c.getInt(c.getColumnIndex("idMateria"));
-                Integer faltas = c.getInt(c.getColumnIndex("faltas"));
+                int faltas = c.getInt(c.getColumnIndex("faltas"));
                 MateriasAlumnos materiasAlumnos = new MateriasAlumnos(id, idAlumno, idMateria, faltas);
 
                 lista.add(materiasAlumnos);
@@ -141,7 +141,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         return listaMaterias;
     }
 
-    public ArrayList<Alumno> getAlumnosOfMateria(String idSelectedMateria){
+    public ArrayList<Alumno> getMateriasOfAlumno(String idSelectedMateria){
         ArrayList<MateriasAlumnos> lista = new ArrayList<>();
         Cursor c = db.rawQuery("select * from materias_alumnos WHERE idMateria = ?", new String[]{idSelectedMateria});
         if(c != null && c.getCount()>0){
@@ -223,5 +223,17 @@ public class MyOpenHelper extends SQLiteOpenHelper {
             c.close();
             return false;
         }
+    }
+
+    public void insertFaltas(String materiaId, String alumnoId, int faltas) {
+        Cursor c = db.rawQuery("select * from materias_alumnos WHERE idAlumno = ? AND idMateria = ?", new String[]{alumnoId, materiaId});
+        c.moveToFirst();
+        int idRegistro = 0;
+        if(c.getCount()>0){
+            idRegistro = c.getInt(c.getColumnIndex("_id"));
+        }
+        ContentValues cv = new ContentValues();
+        cv.put("faltas", faltas);
+        db.update("materias_alumnos", cv,"_id=?", new String[]{Integer.toString(idRegistro)});
     }
 }
