@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NewMateriaActivity extends AppCompatActivity {
     private EditText nombre;
@@ -25,6 +26,7 @@ public class NewMateriaActivity extends AppCompatActivity {
         nombre = (EditText) findViewById(R.id.editNombre);
         clave = (EditText) findViewById(R.id.editClave);
         creditos = (EditText) findViewById(R.id.editCreditos);
+        creditos.setText("0");
 
         addButton = (Button) findViewById(R.id.addButton);
 
@@ -34,8 +36,12 @@ public class NewMateriaActivity extends AppCompatActivity {
     }
 
     private void addMateria(String nombre, String clave, Integer creditos) {
-        db.insertMateria(creditos, clave, nombre);
-        finish();
-        startActivity(getIntent());
+        if(nombre.isEmpty() || clave.isEmpty() || creditos.equals(0)){
+            Toast.makeText(this, "Por favor llene todos los campos.", Toast.LENGTH_LONG);
+        }else{
+            db.insertMateria(creditos, clave, nombre);
+            finish();
+            startActivity(getIntent());
+        }
     }
 }

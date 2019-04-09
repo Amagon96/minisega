@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -46,8 +47,12 @@ public class NewAlumnActivity extends AppCompatActivity {
     }
 
     private void addAlumno(String nombre, String aPaterno, String carrera) {
-        db.insertAlumno(nombre, aPaterno, carrera);
-        finish();
-        startActivity(getIntent());
+        if(nombre.isEmpty() || aPaterno.isEmpty() || carrera.isEmpty()){
+            Toast.makeText(this, "Por favor llene todos los campos.", Toast.LENGTH_LONG);
+        }else {
+            db.insertAlumno(nombre, aPaterno, carrera);
+            finish();
+            startActivity(getIntent());
+        }
     }
 }
