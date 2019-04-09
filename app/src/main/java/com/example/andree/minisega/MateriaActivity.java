@@ -55,6 +55,13 @@ public class MateriaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent previousActivity = new Intent(v.getContext(), MateriasActivity.class);
+                startActivity(previousActivity);
+            }
+        });
 
         db = new MyOpenHelper(this);
         materiaId = Integer.parseInt(intent.getStringExtra("materiaId"));

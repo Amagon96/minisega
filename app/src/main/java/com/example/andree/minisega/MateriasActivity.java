@@ -38,10 +38,16 @@ public class MateriasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materias);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent materiaActivity = new Intent(v.getContext(), MainActivity.class);
+                startActivity(materiaActivity);
+            }
+        });
 
         materiasListView = (ListView) findViewById(R.id.materias);
 

@@ -53,6 +53,13 @@ public class AlumnoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent previousActivity = new Intent(v.getContext(), AlumnosActivity.class);
+                startActivity(previousActivity);
+            }
+        });
 
         db = new MyOpenHelper(this);
 
