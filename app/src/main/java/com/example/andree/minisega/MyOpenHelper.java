@@ -96,7 +96,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    public void registrarAlumnoMateria(Integer idAlumno, Integer idMateria){
+    public void registrarAlumnoMateria(Integer idMateria, Integer idAlumno){
         ContentValues cv = new ContentValues();
         cv.put("idAlumno", idAlumno);
         cv.put("idMateria", idMateria);
@@ -104,8 +104,8 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.insert("materias_alumnos", null, cv);
     }
 
-    public void eliminarAlumnoMateria(Integer idAlumno, Integer idMateria){
-        db.delete("materias_alumnos","=_idAlumno = ? AND idMateria = ?", new String[]{Integer.toString(idAlumno),Integer.toString(idMateria)});
+    public void eliminarAlumnoMateria(Integer idMateria, Integer idAlumno){
+        db.delete("materias_alumnos","idAlumno = ? AND idMateria = ?", new String[]{Integer.toString(idAlumno),Integer.toString(idMateria)});
     }
 
     public ArrayList<Materia> getMateriasOfAlumno(String idSelectedAlumno){
@@ -259,5 +259,23 @@ public class MyOpenHelper extends SQLiteOpenHelper {
             creditos = c.getInt(c.getColumnIndex("creditos"));
         }
         return creditos;
+    }
+
+    public ArrayList<MateriasAlumnos> getMateriasAlumnos(){
+        ArrayList<MateriasAlumnos> lista = new ArrayList<>();
+        Cursor c = db.rawQuery("select * from materias_alumnos", null);
+        if(c != null && c.getCount()>0){
+            c.moveToFirst();
+            do{
+                int alumnoId = c.getInt(c.getColumnIndex("idAlumno"));
+                int materiaId = c.getInt(c.getColumnIndex("idMateria"));
+                int faltas = c.getInt(c.getColumnIndex("faltas"));
+                int id = c.getInt(c.getColumnIndex("_id"));
+                MateriasAlumnos materiasAlumnos = new MateriasAlumnos(id, alumnoId, materiaId,faltas);
+                lista.add(materiasAlumnos);
+            }while(c.moveToNext());
+        }
+        c.close();
+        return lista;
     }
 }

@@ -1,7 +1,9 @@
 package com.example.andree.minisega;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
 
     private int faltasToInsert;
 
+    @TargetApi(Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,9 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
 
 
         inscribirAlumno = (Button) findViewById(R.id.inscribirAlumno);
+        if (isAlumnoInscribed()) {
+            inscribirAlumno.setText("Correr Alumno");
+        }
         inscribirAlumno.setOnClickListener((v)-> {
             registrarAlumnoAMateria(materiaId, alumnoId, alumno);
         });
