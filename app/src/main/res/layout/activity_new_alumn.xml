@@ -86,7 +86,7 @@
         android:layout_marginTop="84dp"
         android:background="@color/colorBackground"
         android:hint="@string/btnAdd"
-        android:text="@string/guardar"
+        android:text="@string/regresar"
         android:textColor="@color/colorWhiteText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editCarrera" />
@@ -100,7 +100,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@color/colorBackground"
-        android:text="@string/regresar"
+        android:text="@string/guardar"
         android:textColor="@color/colorWhiteText"
         app:layout_constraintBottom_toBottomOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
