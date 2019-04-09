@@ -105,8 +105,8 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<Materia> getAlumnoOfMateria(String idSelectedAlumno){
-        ArrayList<MateriasAlumnos> lista = new ArrayList<>();
+    public ArrayList<Materia> getMateriasOfAlumno(String idSelectedAlumno){
+        ArrayList<MateriasAlumnos> lista = new ArrayList<MateriasAlumnos>();
         Cursor c = db.rawQuery("select * from materias_alumnos WHERE idAlumno = ?", new String[]{idSelectedAlumno});
         if(c != null && c.getCount()>0){
             c.moveToFirst();
@@ -124,24 +124,25 @@ public class MyOpenHelper extends SQLiteOpenHelper {
 
         ArrayList<Materia> listaMaterias = new ArrayList<>();
         for (int i = 0; i < lista.size(); i++) {
-            Cursor d = db.rawQuery("select * from materias WHERE _id = ?", new String[]{Integer.toString(lista.get(i).getIdMateria())});
+            Cursor d = db.rawQuery("select * from materias WHERE _id = ?", new String[]{Integer.toString(lista.get(i).getId())});
             if (d != null && d.getCount()>0){
                 d.moveToFirst();
                 do {
                     String nombre = d.getString(d.getColumnIndex("nombre"));
                     String clave = d.getString(d.getColumnIndex("clave"));
-                    Integer creditos = d.getInt(d.getColumnIndex("creditos"));
+                    int creditos = d.getInt(d.getColumnIndex("creditos"));
                     int idM = d.getInt(d.getColumnIndex("_id"));
                     Materia materia = new Materia(creditos, clave, nombre, idM);
+                    System.out.println("materia = " + materia.toString());
                     listaMaterias.add(materia);
-                }while(d.moveToFirst());
+                }while(d.moveToNext());
             }
             d.close();
         }
         return listaMaterias;
     }
 
-    public ArrayList<Alumno> getMateriasOfAlumno(String idSelectedMateria){
+    public ArrayList<Alumno> getAlumnosOfMateria(String idSelectedMateria){
         ArrayList<MateriasAlumnos> lista = new ArrayList<>();
         Cursor c = db.rawQuery("select * from materias_alumnos WHERE idMateria = ?", new String[]{idSelectedMateria});
         if(c != null && c.getCount()>0){

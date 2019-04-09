@@ -86,7 +86,7 @@ public class AlumnoActivity extends AppCompatActivity {
         delete = (ImageButton) findViewById(R.id.deleteButton);
         delete.setOnClickListener(v -> {borrarAlumno();});
 
-        //listaMaterias = db.getMateriasOfAlumno(Integer.toString(alumnId));
+        listaMaterias = db.getMateriasOfAlumno(Integer.toString(alumnId));
         spinnerAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, listaMaterias.toArray());
         materiassListView.setAdapter(spinnerAdapter);
     }
