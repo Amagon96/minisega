@@ -62,6 +62,7 @@ public class AlumnoActivity extends AppCompatActivity {
 
         materiassListView = (ListView) findViewById(R.id.listMaterias);
 
+        /*
         materiassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -73,6 +74,7 @@ public class AlumnoActivity extends AppCompatActivity {
                 startActivityForResult(faltasActivity, 0);
             }
         });
+        */
 
         init();
     }
