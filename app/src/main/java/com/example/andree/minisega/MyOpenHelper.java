@@ -104,6 +104,9 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.insert("materias_alumnos", null, cv);
     }
 
+    public void eliminarAlumnoMateria(Integer idAlumno, Integer idMateria){
+        db.delete("materias_alumnos","=_idAlumno = ? AND idMateria = ?", new String[]{Integer.toString(idAlumno),Integer.toString(idMateria)});
+    }
 
     public ArrayList<Materia> getMateriasOfAlumno(String idSelectedAlumno){
         ArrayList<MateriasAlumnos> lista = new ArrayList<MateriasAlumnos>();

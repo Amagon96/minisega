@@ -1,5 +1,6 @@
 package com.example.andree.minisega;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +53,7 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
         layoutFaltas = (RelativeLayout) findViewById(R.id.containerFaltas);
         layoutFaltas.setVisibility(View.GONE);
 
+
         inscribirAlumno = (Button) findViewById(R.id.inscribirAlumno);
         inscribirAlumno.setOnClickListener((v)-> {
             registrarAlumnoAMateria(materiaId, alumnoId, alumno);
@@ -101,11 +103,21 @@ public class RegistrarAlumnoActivity extends AppCompatActivity {
         getHeader(alumno);
     }
 
+    @SuppressLint("SetTextI18n")
     private void registrarAlumnoAMateria(String materiaId, String alumnoId, Alumno alumnoRegistro) {
-        db.registrarAlumnoMateria(Integer.valueOf(materiaId), Integer.valueOf(alumnoId));
-        layoutFaltas.setVisibility(View.VISIBLE);
-        Toast.makeText(this, String.format("%s ha sido registrado con exito", alumnoRegistro.getNombre(), faltasToInsert),
-                Toast.LENGTH_LONG).show();
+        if(isAlumnoInscribed()) {
+            db.registrarAlumnoMateria(Integer.valueOf(materiaId), Integer.valueOf(alumnoId));
+            layoutFaltas.setVisibility(View.VISIBLE);
+            Toast.makeText(this, String.format("%s ha sido registrado con exito", alumnoRegistro.getNombre(), faltasToInsert),
+                    Toast.LENGTH_LONG).show();
+            inscribirAlumno.setText("Sacar Alumno");
+        }else{
+            db.eliminarAlumnoMateria(Integer.valueOf(materiaId), Integer.valueOf(alumnoId));
+            layoutFaltas.setVisibility(View.GONE);
+            Toast.makeText(this, String.format("%s ha sido removido con exito", alumnoRegistro.getNombre(), faltasToInsert),
+                    Toast.LENGTH_LONG).show();
+            inscribirAlumno.setText("Inscribir Alumno");
+        }
     }
 
     private void insertarFaltasAAlumno(String materiaId, String alumnoId, int faltasToInsert, Alumno alumnoFaltas) {
